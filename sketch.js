@@ -322,12 +322,13 @@ function drawPage() {
     one.pop();
 
     // ------------------------------------Page 'two': Random Images on Right Side -----------------------------------------------------------
-    two.background(215); // Set a background color for Page Two (e.g., white)
-    two.noStroke(); // No stroke for the images
+    if (frameCount % 4 === 0) {
+    two.background(50); // Set a background color for Page Two (e.g., white)
+    // two.noStroke(); // No stroke for the images
 
-    // Updated array of images to choose from, including img10-13, 14, 15
+    // // Updated array of images to choose from, including img10-13, 14, 15
     let randomImages = [img3, img8, img9, img10, img11, img12, img13, img14, img15];
-    let numRandomImages = 3; // Reduced number of random images to display for slower animation
+    let numRandomImages = 5; // Reduced number of random images to display for slower animation
 
     for (let i = 0; i < numRandomImages; i++) {
         let imgToDraw = two.random(randomImages);
@@ -340,6 +341,7 @@ function drawPage() {
 
         two.image(imgToDraw, randomX, randomY, imgWidth, imgHeight);
     }
+  }
     // two page left side
     two.push();
     two.textSize(100);
@@ -349,9 +351,9 @@ function drawPage() {
     two.text("Hyperbole Samosa-\na connection between\nHihats glitches,\nartificial intelligence,\nand himalayan birds\nchirping out bangers", two.width * 0.05, two.height * 0.1);
     two.pop();
 
-
-    three.background(0); // Black background
-
+// --------------------------------------------------------------threePage------------------------------------------------------------//
+    if (frameCount % 15 === 0) {
+      three.background(0); // Black background
     // Display multiple random images with transparency and random sizes
     if (pageThreeImages.length > 0) {
         let numImagesToDraw = 5; // You can adjust this number for more or fewer images per frame (e.g., 5-10)
@@ -397,11 +399,11 @@ function drawPage() {
             }
         } // Closes the 'for' loop
     } // Closes the 'if (pageThreeImages.length > 0)' block
-
+    } //closes if (frameCount loop
 
     // Page 'back'
     let bgColor = [random(255), random(255), random(255)]; // Define bgColor for this scope
-    if (frameCount % 10 == 1) {
+    if (frameCount % 4 == 1) {
         bgColor = [random(255), random(255), random(255)];
     }
 
@@ -409,18 +411,9 @@ function drawPage() {
     let m_back = back.map(back.cos(frameCount * 10), -1, 1, 100, 800); // Renamed 'm' to 'm_back' to avoid conflict
 
     back.background(bgColor)
-    back.textFont("Anek Latin", 200, {
+    back.textFont("Modak", 200, {
         wdth: n_back,
         wght: m_back
     })
-    back.gridLayout("thanx")
-
-
-    // Page 'poster'
-    poster.background("purple")
-    poster.textFont("Anek Latin", 200, {
-        wdth: 75,
-        wght: 600
-    })
-    poster.gridLayout("burp", 20, 10)
+    back.gridLayout("Aiiii")
 } 
