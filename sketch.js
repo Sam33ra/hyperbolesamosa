@@ -137,7 +137,7 @@ function drawPage() {
 
     // Parameters for the waves
     let numWaves = 25; // Reduced number of waves for more spacing
-    let waveSpacing = h / (numWaves + 2); // Increased spacing between waves
+    let waveSpacing = h / (numWaves + 2.5); // Increased spacing between waves
     let waveAmplitude = 80; // Increased base height of the wave peaks for more pronounced waves
     let noiseScaleX = 0.006; // Controls horizontal "zoom" of noise
     let noiseScaleY = 0.05; // Controls vertical "zoom" across waves
@@ -145,10 +145,11 @@ function drawPage() {
 
     // Map audio energy to influence wave amplitude
     // Increased the mapping range (from 0 to 2.0) for stronger audio reactivity
-    let audioAmplitudeMod = cover.map(bassEnergy, 0, 255, 0, 2.0); // amplify peaks by up to 200%
-    let audioOffsetMod = cover.map(midEnergy, 0, 255, -20, 80); // Mid energy can cause slight vertical shifts
+    let audioAmplitudeMod = map(bassEnergy, 0, 255, 0, 1.0); // changed after sai feedback
+    let audioOffsetMod = map(midEnergy, 0, 255, 0, -20);
+    console.log(audioOffsetMod)
 
-    cover.noFill(); // Waves should not be filled
+    cover.noFill(); // Waves not be filled
     cover.stroke(255); // White stroke for the waves
     cover.strokeWeight(2); // Thinner stroke for multiple lines
 
@@ -161,17 +162,16 @@ function drawPage() {
 
         for (let x = 0; x <= w; x += 5) {
             // Calculate noise offset
-            let noiseVal = cover.noise(x * noiseScaleX, i * noiseScaleY + cover.frameCount * noiseTimeScale);
-            let yOffset = cover.map(noiseVal, 0, 1, -waveAmplitude, waveAmplitude);
+            let noiseVal = noise(x * noiseScaleX, i * noiseScaleY + frameCount * noiseTimeScale);
 
             // Add audio influence to the yOffset
             // Applying audioAmplitudeMod directly multiplies the existing noise-based yOffset
-            yOffset += yOffset * audioAmplitudeMod;
+            let yOffset = map(noiseVal, 0, 1, -waveAmplitude, waveAmplitude);
 
             // Base Y position for this wave line
             let baseLineY = (i + 1) * waveSpacing + h * 0.1; // Shift waves down a bit from top
 
-            cover.curveVertex(x, baseLineY + yOffset + audioOffsetMod);
+            cover.curveVertex(x, baseLineY + yOffset - midEnergy);
         }
 
         // Add a final curveVertex outside the visible area for smoothness
@@ -194,7 +194,7 @@ function drawPage() {
 
     cover.push(); // Start a new transformation state
     cover.translate(imageX, imageY); // Move origin to the center of the image
-    cover.rotate(cover.frameCount * 0.05); // Rotate based on frameCount for continuous spin (adjust 0.05 for speed)
+    cover.rotate(frameCount * 0.05); // Rotate based on frameCount for continuous spin (adjust 0.05 for speed)
     cover.image(img, -baseSamosaWidth / 2, -baseSamosaHeight / 2, baseSamosaWidth, baseSamosaHeight); // Draw image centered at the new origin
     cover.pop(); // Restore previous transformation state
 
@@ -274,7 +274,7 @@ function drawPage() {
     one.image(birdImage1, bird1X, bird1Y, birdImage1.width * birdScale, birdImage1.height * birdScale);
     bird1X += bird1Speed;
     if (bird1X > one.width) {
-        bird1X = -birdImage1.width * birdScale; // Reset position with original size
+        bird1X = -birdImage1.width * birdScale; 
     }
 
     // Bird 2: Up to Down - Reverted to original birdScale
