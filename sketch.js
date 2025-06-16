@@ -9,7 +9,7 @@ let img2; // 2 samosas
 let img3; // birds-of-india-colonial painting-bgremove.jpg
 let img4; // hornbill_bgremove.png
 let img5; // peacock_bgremove.png
-let img6; // sparrow_bgremove.png
+let img6; // fruitbat.png
 let img7; // 2025-05-04 (bgremove).png
 let img8; // mughal_bgremove.png
 let img9; // navkoonjar_bgremove.png
@@ -30,7 +30,7 @@ let img19; //qr
 let birdImage1; // birds-of-india-colonial painting-bgremove.jpg
 let birdImage2; // hornbill_bgremove.png
 let birdImage3; // peacock_bgremove.png
-let birdImage4; // sparrow_bgremove.png
+let birdImage4; // fruitbat.png
 let birdImage5; // 2025-05-04 (bgremove).png
 
 // Bird positions and speeds
@@ -40,7 +40,7 @@ let bird3X, bird3Y, bird3Speed = 15; // Right to Left
 let bird4X, bird4Y, bird4SpeedX = 5, bird4SpeedY = 6; // Diagonal (
 let bird5X, bird5Y; // For random movement
 let bird5RandomSpeed = 8; // Base speed for random bird (speed increased by 4x)
-let birdScale = 0.6; // ADJUSTED: Scale factor for all birds (now 0.5)
+let birdScale = 0.65; // ADJUSTED: Scale factor for all birds (now 0.5)
 
 // global variables for Page One background
 let m = 0; // Global variable for animation (currently unused)
@@ -65,7 +65,7 @@ function preload() {
     img3 = loadImage("birds-of-india-colonial painting-bgremove.jpg");
     img4 = loadImage("hornbill_bgremove.png");
     img5 = loadImage("peacock_bgremove.png");
-    img6 = loadImage("sparrow_bgremove.png");
+    img6 = loadImage("fruitbat.png");
     img7 = loadImage("2025-05-04 (bgremove).png");
     img8 = loadImage("mughal_bgremove.png");
     img9 = loadImage("navkoonjar_bgremove.png"); // Added img9
@@ -401,7 +401,7 @@ function drawPage() {
     two.text("HYPERBOLE SAMOSA\n \nListen to\nHihats glitches,\nprophetic dream of\nartificial intelligence,\nand himalayan birds\nchirping out bangers", two.width * 0.05, two.height * 0.1);
     two.pop();
 
-// --------------------------------------------------------------threePage------------------------------------------------------------//
+// -----------------------------------------threePage------------------------------------------------------------//
      if (frameCount % 5 == 1) {
     let bgColor = [random(255), random(255), random(255)]; // Define bgColor for this scope   
     three.background(bgColor); // Apply the random background to the entire page
@@ -426,7 +426,33 @@ function drawPage() {
             three.text(textPattern, x, y);
         }
     }
-}
+
+    if (birdImage1) { 
+        three.image(birdImage1, three.width * 0.1, three.height * 0.1, birdImage1.width * 0.7, birdImage1.height * 0.7);
+    }
+
+    // Using birdImage2 (img4) - hornbill_bgremove.png
+    // Position it near the center-top
+    if (birdImage2) {
+        three.image(birdImage2, three.width * 0.45, three.height * 0.05, birdImage2.width * 0.8, birdImage2.height * 0.8);
+    }
+
+    // Using birdImage3 (img5) - peacock_bgremove.png
+    // Position it towards the middle right
+    if (birdImage3) {
+        three.image(birdImage3, three.width * 0.6, three.height * 0.3, birdImage3.width * 0.6, birdImage3.height * 0.6);
+    }    
+
+    // Position it towards the bottom right
+    if (birdImage5) {
+        three.image(birdImage5, three.width * 0.1, three.height * 0.45, birdImage5.width * 0.8, birdImage5.height * 0.8);
+    }
+
+  
+
+    // --- END ADDED BIRD IMAGES ---
+
+} // Closes the if (frameCount % 5 == 1) block
 
     //---------------------------------BackPage-----------------------------------------//
   back.push();
