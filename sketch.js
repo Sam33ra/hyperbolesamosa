@@ -1,7 +1,7 @@
 const zine = {
-    title: "hyperbole SAMOSA",
-    description: "this is the description for how to listen to a samosa. Hyperbole Samosa-\nrandomised melodies,\nHihats glitches,\nand a prophetic dreaming of\nalternate definitions for\nartificial intelligence",
-    author: "roguentropy"
+    title: "Hyperbole Samosa",
+    description: "this is a comprehensive guide for how to listen to a samosa. Hyperbole Samosa-\nrandomised melodies,\nHihats glitches,\nand a prophetic dreaming about\nalternate definitions of\nartificial intelligence",
+    author: "roguentropy x Ra"
 }
 
 let img; // samosa_bgremove.png (for spinning on the right)
@@ -18,12 +18,15 @@ let img11; // Ravana_fighting_with_Jatayu.jpg
 let img12; // saraswati.jpg
 let img13; // Ravi_Varma-Ravana_Sita_Jathayu.jpg
 let img14; //Indian_myth_and_legend.jpg(damyanti&hans)
-let img15; //peacock.jpg
+let img15; // peacock.jpg
+let img16; // navkoonjar.jpg
+let img17; // Brahma_on_hamsa.jpg
+let img18; // 2025-06-06.png(swan, girl, lotus)
+let img19; //qr
 
 
 
 // --- GLOBAL VARIABLES FOR PAGE ONE ANIMATION ---
-// Bird images (will be assigned from img3-img7 in preload)
 let birdImage1; // birds-of-india-colonial painting-bgremove.jpg
 let birdImage2; // hornbill_bgremove.png
 let birdImage3; // peacock_bgremove.png
@@ -31,25 +34,29 @@ let birdImage4; // sparrow_bgremove.png
 let birdImage5; // 2025-05-04 (bgremove).png
 
 // Bird positions and speeds
-let bird1X, bird1Y, bird1Speed = 20; // Left to Right (speed increased by 4x)
-let bird2X, bird2Y, bird2Speed = 12; // Up to Down (speed increased by 4x)
-let bird3X, bird3Y, bird3Speed = 15; // Right to Left (speed increased by 4x)
-let bird4X, bird4Y, bird4SpeedX = 5, bird4SpeedY = 6; // Diagonal (speeds increased by 4x)
+let bird1X, bird1Y, bird1Speed = 20; // Left to Right
+let bird2X, bird2Y, bird2Speed = 12; // Up to Down
+let bird3X, bird3Y, bird3Speed = 15; // Right to Left 
+let bird4X, bird4Y, bird4SpeedX = 5, bird4SpeedY = 6; // Diagonal (
 let bird5X, bird5Y; // For random movement
 let bird5RandomSpeed = 8; // Base speed for random bird (speed increased by 4x)
-let birdScale = 0.5; // ADJUSTED: Scale factor for all birds (now 0.5)
+let birdScale = 0.6; // ADJUSTED: Scale factor for all birds (now 0.5)
 
-// New global variables for Page One background
-let m = 0; // Global variable for animation (currently unused without pulsation/rotation)
+// global variables for Page One background
+let m = 0; // Global variable for animation (currently unused)
 let samosaImage; // Variable to hold the loaded samosa image for Page One background
 
 // Audio variables for mic input
 let mic;
 let fft;
 
-// threePage - REMOVED myGlitch declaration
-let pageThreeImages = []; // Array to hold images for page three (img11-img15)
-let pageThreeImageCounter = 0; // Counter for cycling through page three images
+// pagethree and pagetwo
+let pageThreeImages = [];
+let pageThreeImageCounter = 0;
+let glitch;      
+let glitchMain;
+let glitchPop;
+let twoPagePopImages = [];
 
 function preload() {
     // Ensure these image files are in the same directory as your sketch.js
@@ -68,6 +75,10 @@ function preload() {
     img13 = loadImage("Ravi_Varma-Ravana_Sita_Jathayu.jpg");
     img14 = loadImage("Indian_myth_and_legend.jpg");
     img15 = loadImage("peacock.jpg");
+    img16 = loadImage("navkoonjar.jpg")
+    img17 = loadImage("Brahma_on_hamsa.jpg")
+    img18 = loadImage("2025-06-06.png")
+    img19 = loadImage("qr.jpg")
 
     // Assign already loaded images to birdImage variables for Page One
     birdImage1 = img3;
@@ -79,12 +90,23 @@ function preload() {
     // Page One background
     samosaImage = loadImage("samosa_bgremove.png"); // Use the same image as 'img' for this background
 
+    // Page two array
+    twoPagePopImages.push(img11);
+    twoPagePopImages.push(img12);
+    twoPagePopImages.push(img13);
+    twoPagePopImages.push(img14);
+    twoPagePopImages.push(img15);
+    twoPagePopImages.push(img16);
+
     // pagethree - Directly add images to the array, no glitch
     pageThreeImages.push(img11);
     pageThreeImages.push(img12);
     pageThreeImages.push(img13);
     pageThreeImages.push(img14);
     pageThreeImages.push(img15);
+    pageThreeImages.push(img16);
+    pageThreeImages.push(img17);
+    pageThreeImages.push(img18);
 }
 
 function setupPage() {
@@ -100,16 +122,16 @@ function setupPage() {
 
     // for pageOne
     bird1X = -birdImage1.width * birdScale; // Start off-screen left
-    bird1Y = one.height * 0.30; // ADJUSTED: Bird 1 starts at 30% from top
+    bird1Y = one.height * 0.40; // ADJUSTED: Bird 1 starts at 30% from top
 
-    bird2X = one.width * 0.5; // Start towards right (relative to one's width)
+    bird2X = one.width * 0.7; // Start towards right (relative to one's width)
     bird2Y = -birdImage2.height * birdScale; // Adjusted: Start just off-screen top based on new scale
 
     bird3X = one.width; // Start off-screen right
-    bird3Y = one.height * 0.70; // ADJUSTED: Peacock starts at 70% from top, on the right
+    bird3Y = one.height * 0.80; // Peacock starts at 80% from top, on the right
 
-    bird4X = -birdImage4.width * birdScale; // Adjusted: Start just off-screen top-left based on new scale
-    bird4Y = -birdImage4.height * birdScale; // Adjusted: Start just off-screen top-left based on new scale
+    bird4X = -birdImage4.width * birdScale; 
+    bird4Y = -birdImage4.height * birdScale; 
 
     bird5X = one.random(one.width); // Start at a random X on 'one'
     bird5Y = one.random(one.height); // Start at a random Y on 'one'
@@ -117,7 +139,16 @@ function setupPage() {
     // Set imageMode for 'one' graphics buffer
     one.imageMode(one.CENTER);
 
-    // Removed all glitch-related setup
+    // twoPage
+    glitch = new Glitch();
+glitch.loadType('jpeg');
+if (img16 && img16.width > 0 && img16.height > 0) {
+    glitch.loadImage(img16);
+    console.log("Initial image 'navkoonjar.jpg' loaded and JPEG glitch type set for Page Two.");
+} else {
+    console.error("Error: 'navkoonjar.jpg' could not be loaded or is invalid. Glitch effect might not work.");
+}
+
 }
 
 function drawPage() {
@@ -136,7 +167,7 @@ function drawPage() {
     let midEnergy = fft.getEnergy('mid'); // Get the energy of mid frequencies
 
     // Parameters for the waves
-    let numWaves = 25; // Reduced number of waves for more spacing
+    let numWaves = 23; // Reduced number of waves for more spacing
     let waveSpacing = h / (numWaves + 2.5); // Increased spacing between waves
     let waveAmplitude = 80; // Increased base height of the wave peaks for more pronounced waves
     let noiseScaleX = 0.006; // Controls horizontal "zoom" of noise
@@ -146,7 +177,7 @@ function drawPage() {
     // Map audio energy to influence wave amplitude
     // Increased the mapping range (from 0 to 2.0) for stronger audio reactivity
     let audioAmplitudeMod = map(bassEnergy, 0, 255, 0, 1.0); // changed after sai feedback
-    let audioOffsetMod = map(midEnergy, 0, 255, 0, -20);
+    let audioOffsetMod = map(midEnergy, 0, 255, -10, 1.0);
     console.log(audioOffsetMod)
 
     cover.noFill(); // Waves not be filled
@@ -321,99 +352,166 @@ function drawPage() {
     one.text("Do you hear\nmusic\nfrom the forest?...", one.width * 0.1, one.height * 0.1);
     one.pop();
 
-    // ------------------------------------Page 'two': Random Images on Right Side -----------------------------------------------------------
-    if (frameCount % 4 === 0) {
-    two.background(50); // Set a background color for Page Two (e.g., white)
-    // two.noStroke(); // No stroke for the images
+    // ------------------------------------Page 'two': glitch Images on Right Side -----------------------------------------------------------
+ if (frameCount % 4 === 0) {
+    // two.background (0);
+    two.push();
+    two.fill(40); // Set background color for the left half (or any color you want)
+    two.rectMode(two.CORNER);
+    two.rect(0, 0, two.width / 2, two.height); // Draw rectangle over the left half
+    two.pop();
+    glitch.resetBytes();
+    glitch.randomBytes(1);
 
-    // // Updated array of images to choose from, including img10-13, 14, 15
-    let randomImages = [img3, img8, img9, img10, img11, img12, img13, img14, img15];
-    let numRandomImages = 5; // Reduced number of random images to display for slower animation
+    glitch.buildImage(function() {
+        two.push();
+        two.rectMode(two.CORNER);
 
-    for (let i = 0; i < numRandomImages; i++) {
-        let imgToDraw = two.random(randomImages);
-        let imgWidth = imgToDraw.width * 0.4;
-        let imgHeight = imgToDraw.height * 0.2;
+        //clipping path
+        two.beginShape();
+        two.rect(two.width / 2, 0, two.width / 2, two.height); // Define the clipping rectangle
+        two.endShape(two.CLOSE);
+        two.drawingContext.clip(); // Apply the clipping path
 
-        // Generate random X position only in the right half of the canvas
-        let randomX = two.random(two.width / 2, two.width - imgWidth / 2);
-        let randomY = two.random(imgHeight / 2, two.height - imgHeight / 2);
+        two.imageMode(two.CENTER);
 
-        two.image(imgToDraw, randomX, randomY, imgWidth, imgHeight);
-    }
+        let targetWidth = two.width / 2;
+        let targetHeight = two.height;
+        let imgAspectRatio = glitch.image.width / glitch.image.height;
+
+        let displayWidth = targetWidth;
+        let displayHeight = targetWidth / imgAspectRatio;
+
+        if (displayHeight > targetHeight) {
+            displayHeight = targetHeight;
+            displayWidth = targetHeight * imgAspectRatio;
+        }
+
+        two.image(glitch.image, two.width * 0.75, two.height / 2, displayWidth, displayHeight);
+        two.pop();
+    });
+
   }
     // two page left side
     two.push();
-    two.textSize(100);
+    two.textSize(60);
     two.textFont("Yatra One");
-    two.fill(255, 105, 180); // Hot Pink
+    two.fill(255, 105, 160); // Hot Pink
     two.textAlign(two.LEFT, two.TOP);
-    two.text("Hyperbole Samosa-\na connection between\nHihats glitches,\nartificial intelligence,\nand himalayan birds\nchirping out bangers", two.width * 0.05, two.height * 0.1);
+    two.text("HYPERBOLE SAMOSA\n \nListen to\nHihats glitches,\nprophetic dream of\nartificial intelligence,\nand himalayan birds\nchirping out bangers", two.width * 0.05, two.height * 0.1);
     two.pop();
 
 // --------------------------------------------------------------threePage------------------------------------------------------------//
-    if (frameCount % 15 === 0) {
-      three.background(0); // Black background
-    // Display multiple random images with transparency and random sizes
-    if (pageThreeImages.length > 0) {
-        let numImagesToDraw = 5; // You can adjust this number for more or fewer images per frame (e.g., 5-10)
+     if (frameCount % 5 == 1) {
+    let bgColor = [random(255), random(255), random(255)]; // Define bgColor for this scope   
+    three.background(bgColor); // Apply the random background to the entire page
 
-        for (let i = 0; i < numImagesToDraw; i++) {
-            // Get a random image from the array each time
-            let currentImage = three.random(pageThreeImages);
+    let n_three = 75 + three.sin(frameCount * 10) * 25;
+    let m_three = three.map(back.cos(frameCount * 10), -1, 1, 100, 800);
 
-            // Check if the image is valid and loaded
-            if (currentImage && currentImage.width > 0 && currentImage.height > 0) {
-                // Set image transparency (e.g., 100-200 alpha out of 255) for layering
-                // Using a random transparency can add to the layered effect
-                three.tint(255, three.random(100, 200)); // Random alpha between 100 and 200
+    three.textFont("Modak", 200, { // Apply the font, size, and dynamic width/weight
+        wdth: n_three,
+        wght: m_three
+    });
+    three.fill(0); // Set the text color to black, as seen in your screenshot
+    three.textAlign(three.LEFT, three.TOP);
+    let textPattern = "A i i i i i i i i i i i i i i i i i i"; // The specific string you want to see
+    let textSizeValue = 200; // The font size you've set
+    three.textSize(textSizeValue); 
 
-                // Determine random size while maintaining aspect ratio
-                let imgAspectRatio = currentImage.width / currentImage.height;
+    let patternWidth = three.textWidth(textPattern);
 
-                // Random base size, for example, between 15% and 40% of the canvas width
-                let baseSize = three.random(three.width * 0.15, three.width * 0.4);
-                // Adjust these ranges as needed for desired size variety (min and max image size)
+    for (let x = 0; x < three.width + patternWidth; x += patternWidth) {
+        for (let y = 0; y < three.height + textSizeValue; y += textSizeValue * 1.1) {
+            three.text(textPattern, x, y);
+        }
+    }
+}
 
-                let displayWidth = baseSize;
-                let displayHeight = baseSize / imgAspectRatio;
+    //---------------------------------BackPage-----------------------------------------//
+  back.push();
+  back.background (50)
+    back.textSize(40);
+    back.textFont("Yatra One");
+    back.fill(255);
+    back.text("Hyperbole Samosa is a part of\nCODEWEAVE,\na community driven compilation\nof algorithmic music from India.", back.width * 0.10, back.height * 0.45);
+    back.textAlign(back.LEFT, back.CENTER);
+    back.text("Credits for Hyperbole Samosa", back.width * 0.10, back.height * 0.65)
+    back.text("Roguentropy", back.width * 0.10, back.height * 0.75)
+    back.text("Sameera", back.width * 0.10, back.height * 0.85)
+    back.fill(195);
+    back.text("Music Producer", back.width * 0.10, back.height * 0.80)
+    back.text("Visual Artist", back.width * 0.10, back.height * 0.90)
+    back.image(img19, back.width * 0.10, back.height * 0.15, 250, 250);
+    back.pop();
 
-                // Optional: If the image is extremely tall after scaling by width,
-                // re-scale it based on height to prevent it from going too far off-screen vertically.
-                if (displayHeight > three.height * 0.8) { // If it's more than 80% of canvas height
-                    displayHeight = three.height * 0.8;
-                    displayWidth = displayHeight * imgAspectRatio;
-                }
+// ----------------------------------------poster page-------------------------------------------------------- //
+if (frameCount % 15 === 0) { // Keep the frameCount check to control update speed
+        poster.background(0); // Black background for the poster
+    poster.imageMode(poster.CENTER); // Set imageMode for 'one' graphics buffer
 
-                // Generate random position for the image to appear anywhere on the canvas
-                // Allow images to appear slightly off-screen for a more "cut-off" or layered look
-                // We're calculating top-left corner (randomX, randomY)
-                let randomX = three.random(-displayWidth / 2, three.width - displayWidth / 2);
-                let randomY = three.random(-displayHeight / 2, three.height - displayHeight / 2);
+    // Define grid spacing and size for the geometric elements
+    let gridSize = 95;
+    let imageWidth = 110; // Fixed width of each samosa image
 
-                three.image(currentImage, randomX, randomY, displayWidth, displayHeight);
+    for (let x = 0; x < poster.width; x += gridSize) {
+        for (let y = 0; y < poster.height; y += gridSize) {
+            poster.push();
 
-                three.noTint(); // Reset tint after drawing each image
-            } else {
-                console.log("Image not ready or invalid dimensions for random draw at index:", pageThreeImages.indexOf(currentImage));
-            }
-        } // Closes the 'for' loop
-    } // Closes the 'if (pageThreeImages.length > 0)' block
-    } //closes if (frameCount loop
+            poster.translate(x + gridSize / 2, y + gridSize / 2);
 
-    // Page 'back'
-    let bgColor = [random(255), random(255), random(255)]; // Define bgColor for this scope
-    if (frameCount % 4 == 1) {
-        bgColor = [random(255), random(255), random(255)];
+            // Calculate the image height to maintain aspect ratio (using fixed imageWidth)
+            let imageHeight = imageWidth * (samosaImage.height / samosaImage.width);
+            poster.tint(255, 102)
+
+            // Draw the samosa image with maintained aspect ratio at its fixed size
+            poster.image(samosaImage, 0, 0, imageWidth, imageHeight);
+
+            poster.pop();
+        }
     }
 
-    let n_back = 75 + back.sin(frameCount * 10) * 25; // Renamed 'n' to 'n_back' to avoid conflict
-    let m_back = back.map(back.cos(frameCount * 10), -1, 1, 100, 800); // Renamed 'm' to 'm_back' to avoid conflict
+    // Apply no stroke globally for this page (if needed for other elements later)
+    poster.noStroke();
+        
+        if (pageThreeImages.length > 0) {
+            let numImagesToDraw = 8; // You can adjust this number for more or fewer images per frame (e.g., 5-10)
 
-    back.background(bgColor)
-    back.textFont("Modak", 200, {
-        wdth: n_back,
-        wght: m_back
-    })
-    back.gridLayout("Aiiii")
-} 
+            for (let i = 0; i < numImagesToDraw; i++) {
+                // Get a random image from the array each time
+                let currentImage = poster.random(pageThreeImages); // Use poster.random()
+
+                if (currentImage && currentImage.width > 0 && currentImage.height > 0) {
+                    // Set image transparency (e.g., 100-200 alpha out of 255) for layering
+                    poster.tint(255, poster.random(140, 200)); // Random alpha between 100 and 200, use poster.random()
+
+                    // Determine random size while maintaining aspect ratio
+                    let imgAspectRatio = currentImage.width / currentImage.height;
+
+                    // Random base size, for example, between 15% and 40% of the canvas width
+                    let baseSize = poster.random(poster.width * 0.25, poster.width * 0.4); // Use poster.random()
+                    // Adjust these ranges as needed for desired size variety (min and max image size)
+
+                    let displayWidth = baseSize;
+                    let displayHeight = baseSize / imgAspectRatio;
+
+                    // Optional: If the image is extremely tall after scaling by width,
+                    if (displayHeight > poster.height * 0.8) { // If it's more than 80% of canvas height
+                        displayHeight = poster.height * 0.8;
+                        displayWidth = displayHeight * imgAspectRatio;
+                    }
+
+                    let randomX = poster.random(-displayWidth / 2, poster.width - displayWidth / 2); // Use poster.random()
+                    let randomY = poster.random(-displayHeight / 2, poster.height - displayHeight / 2); // Use poster.random()
+
+                    poster.image(currentImage, randomX, randomY, displayWidth, displayHeight);
+
+                    poster.noTint();
+                } else {
+                    console.log("Image not ready or invalid dimensions for random draw at index:", pageThreeImages.indexOf(currentImage));
+                }
+            } // Closes the 'for' loop
+        } // Closes the 'if (pageThreeImages.length > 0)' block
+    } //closes if (frameCount loop
+
+}
