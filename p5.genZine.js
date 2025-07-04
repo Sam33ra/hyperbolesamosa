@@ -14068,7 +14068,7 @@ function downloadJPG() {
   borderYes = true;
 }
 
-const PRINTMARGIN = 0.98; // in inches
+const PRINTMARGIN = 0.2; // in inches
 
 function downloadPDF() {
   borderYes = false;

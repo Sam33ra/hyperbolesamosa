@@ -58,6 +58,10 @@ let glitchMain;
 let glitchPop;
 let twoPagePopImages = [];
 
+//sound snippet
+
+let mySound;
+
 function preload() {
     // Ensure these image files are in the same directory as your sketch.js
     img = loadImage("samosa_bgremove.png"); // The main image for the cover
@@ -87,6 +91,10 @@ function preload() {
     birdImage4 = img6;
     birdImage5 = img7;
 
+    // sound snippet
+    soundFormats('wav', 'mp3', 'ogg');
+    mySound = loadSound('snippet_roguentropy_hyperbole-samosa.wav');
+
     // Page One background
     samosaImage = loadImage("samosa_bgremove.png"); // Use the same image as 'img' for this background
 
@@ -115,6 +123,7 @@ function setupPage() {
     // Initialize audio input
     mic = new p5.AudioIn();
     mic.start();
+
 
     // Initialize FFT for frequency analysis
     fft = new p5.FFT();
@@ -540,4 +549,13 @@ if (frameCount % 15 === 0) { // Keep the frameCount check to control update spee
         } // Closes the 'if (pageThreeImages.length > 0)' block
     } //closes if (frameCount loop
 
+}
+
+function mousePressed() {
+    if (mySound.isLoaded()) {
+        mySound.play();
+        console.log("Sound played on mouse press!"); // Optional: for debugging
+    } else {
+        console.log("Sound not loaded yet!"); // Optional: for debugging
+    }
 }
